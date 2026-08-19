@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyber-neon">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Leaderboard 🏆 RhythmType Speed Typing</title>
+  <meta name="description" content="View top speed typing rankings, Net WPM records, and verified typing scores on RhythmType.">
+  
+  <!-- Google Fonts & Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- AMBIENT GLOW BLOBS -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="app-header">
+    <a href="/" class="logo">
+      <span class="material-symbols-rounded logo-icon">keyboard</span>
+      <span>Rhythm<span class="logo-highlight">Type</span></span>
+    </a>
+    
+    <nav class="nav-links">
+      <a href="/" class="nav-link">
+        <span class="material-symbols-rounded">keyboard</span> Test
+      </a>
+      <a href="/leaderboard" class="nav-link active">
+        <span class="material-symbols-rounded">leaderboard</span> Leaderboard
+      </a>
+      <a href="/profile" class="nav-link">
+        <span class="material-symbols-rounded">person</span> Profile
+      </a>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <div class="page-title-box">
+      <h1 class="page-title">Global Speed Leaderboard 🏆</h1>
+      <p class="page-subtitle">Verified anti-cheat records for top speed typists world-wide.</p>
+    </div>
+
+    <!-- FILTER TOOLBAR -->
+    <div class="controls-bar glass-card">
+      <div class="control-group">
+        <span class="control-label"><span class="material-symbols-rounded">tune</span> Mode:</span>
+        <button class="btn-pill active" data-lb-mode="words"><span class="material-symbols-rounded">notes</span> Words</button>
+        <button class="btn-pill" data-lb-mode="punctuation"><span class="material-symbols-rounded">match_case</span> Punctuation</button>
+        <button class="btn-pill" data-lb-mode="numbers"><span class="material-symbols-rounded">pin</span> Numbers</button>
+        <button class="btn-pill" data-lb-mode="code"><span class="material-symbols-rounded">code</span> Code</button>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label"><span class="material-symbols-rounded">timer</span> Time:</span>
+        <button class="btn-pill" data-lb-duration="15">15s</button>
+        <button class="btn-pill active" data-lb-duration="30">30s</button>
+        <button class="btn-pill" data-lb-duration="60">60s</button>
+        <button class="btn-pill" data-lb-duration="120">120s</button>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD TABLE -->
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th style="width: 80px;">Rank</th>
+          <th>Typist</th>
+          <th>WPM</th>
+          <th>Accuracy</th>
+          <th>Consistency</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <tr>
+          <td colspan="6" style="text-align:center; padding: 2rem;">Loading Top Speed Demons...</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+  <script>
+    const theme = localStorage.getItem('rhythm_theme') || 'cyber-neon';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <script src="/js/leaderboard.js"></script>
+</body>
+</html>

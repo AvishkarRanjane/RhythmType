@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyber-neon">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RhythmType ⚡ Speed Typing Test, Analytics & Gamified Platform</title>
+  <meta name="description" content="RhythmType is a modern, high-performance speed typing test platform with real-time analytics, Web Audio API sound FX, anti-cheat telemetry, and gamification.">
+  
+  <!-- Google Fonts & Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- AMBIENT GLOW BLOBS -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="app-header">
+    <a href="/" class="logo">
+      <span class="material-symbols-rounded logo-icon">keyboard</span>
+      <span>Rhythm<span class="logo-highlight">Type</span></span>
+    </a>
+    
+    <nav class="nav-links">
+      <a href="/" class="nav-link active">
+        <span class="material-symbols-rounded">keyboard</span> Test
+      </a>
+      <a href="/leaderboard" class="nav-link">
+        <span class="material-symbols-rounded">leaderboard</span> Leaderboard
+      </a>
+      <a href="/profile" class="nav-link">
+        <span class="material-symbols-rounded">person</span> Profile
+      </a>
+    </nav>
+
+    <div class="header-right">
+      <div id="user-pill" class="user-badge" style="display: none;">
+        <span class="streak-pill"><span class="material-symbols-rounded">local_fire_department</span> <span id="user-streak">0</span>d</span>
+        <span class="level-pill"><span class="material-symbols-rounded">bolt</span> Lvl <span id="user-level">1</span></span>
+      </div>
+
+      <button id="auth-btn" class="btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.88rem;">
+        <span class="material-symbols-rounded">login</span> Login
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="main-content">
+    
+    <!-- CONTROLS & PRESET TOOLBAR -->
+    <div id="controls-bar" class="controls-bar glass-card">
+      <div class="control-group">
+        <span class="control-label"><span class="material-symbols-rounded">tune</span> Mode:</span>
+        <button class="btn-pill" data-mode="words"><span class="material-symbols-rounded">notes</span> Words</button>
+        <button class="btn-pill" data-mode="punctuation"><span class="material-symbols-rounded">match_case</span> Punctuation</button>
+        <button class="btn-pill" data-mode="numbers"><span class="material-symbols-rounded">pin</span> Numbers</button>
+        <button class="btn-pill" data-mode="code"><span class="material-symbols-rounded">code</span> Code</button>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label"><span class="material-symbols-rounded">timer</span> Time:</span>
+        <button class="btn-pill" data-duration="15">15s</button>
+        <button class="btn-pill" data-duration="30">30s</button>
+        <button class="btn-pill" data-duration="60">60s</button>
+        <button class="btn-pill" data-duration="120">120s</button>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label"><span class="material-symbols-rounded">palette</span> Theme:</span>
+        <select id="theme-select" class="theme-dropdown">
+          <option value="cyber-neon">Cyber Neon</option>
+          <option value="midnight">Midnight Slate</option>
+          <option value="nord">Nord Arctic</option>
+          <option value="matrix">Matrix Green</option>
+        </select>
+        <button id="sound-toggle-btn" class="btn-pill" style="margin-left: 0.4rem;">
+          <span class="material-symbols-rounded">volume_up</span> Sound
+        </button>
+      </div>
+    </div>
+
+    <!-- TYPING TEST ARENA -->
+    <div id="test-container">
+      
+      <!-- LIVE METRICS BAR -->
+      <div id="live-metrics-bar" class="live-metrics-bar">
+        <div class="metric-item">
+          <span class="metric-title"><span class="material-symbols-rounded">schedule</span> Time</span>
+          <span id="live-timer" class="metric-val">30s</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-title"><span class="material-symbols-rounded">speed</span> Net WPM</span>
+          <span id="live-wpm" class="metric-val">0</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-title"><span class="material-symbols-rounded">target</span> Accuracy</span>
+          <span id="live-acc" class="metric-val">100%</span>
+        </div>
+      </div>
+
+      <!-- TYPING ARENA & CARETS -->
+      <div id="typing-arena" class="typing-arena glass-card">
+        <input type="text" id="hidden-input" class="hidden-input" autocomplete="off" capitalize="off" spellcheck="false" autofocus />
+        <div id="caret" class="caret"></div>
+        <div id="words-wrapper" class="words-wrapper"></div>
+      </div>
+
+      <!-- RESTART HINT -->
+      <div class="restart-hint">
+        <button id="restart-btn" class="btn-pill">
+          <span class="material-symbols-rounded">restart_alt</span> Restart Test
+        </button>
+        <span>Press <span class="kbd-badge">Tab</span> + <span class="kbd-badge">Enter</span> to restart</span>
+      </div>
+
+    </div>
+
+    <!-- POST-TEST ANALYTICS SCREEN -->
+    <div id="analytics-screen" class="analytics-screen">
+      <div class="analytics-header">
+        <div class="hero-metric">
+          <span id="final-wpm" class="hero-wpm">0</span>
+          <span class="hero-label">NET WORDS PER MINUTE</span>
+        </div>
+        
+        <div class="analytics-actions">
+          <button id="retry-btn" class="btn-primary">
+            <span class="material-symbols-rounded">restart_alt</span> Next Test
+          </button>
+          <button id="share-btn" class="btn-secondary">
+            <span class="material-symbols-rounded">share</span> Share Result
+          </button>
+        </div>
+      </div>
+
+      <!-- WPM CANVAS CHART -->
+      <div class="chart-container glass-card">
+        <canvas id="wpm-chart"></canvas>
+      </div>
+
+      <!-- DETAILED METRICS GRID -->
+      <div class="metrics-grid">
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Accuracy</span>
+          <span id="final-acc" class="grid-card-val">100%</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Raw WPM</span>
+          <span id="final-raw" class="grid-card-val">0</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Consistency</span>
+          <span id="final-cons" class="grid-card-val">0%</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Duration</span>
+          <span id="final-time" class="grid-card-val">30s</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Correct Chars</span>
+          <span id="final-correct" class="grid-card-val" style="color: var(--char-correct);">0</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Incorrect Chars</span>
+          <span id="final-incorrect" class="grid-card-val" style="color: var(--char-incorrect);">0</span>
+        </div>
+        <div class="grid-card glass-card">
+          <span class="grid-card-label">Extra Chars</span>
+          <span id="final-extra" class="grid-card-val">0</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- AUTHENTICATION MODAL -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-box glass-card">
+      <div class="modal-header">
+        <h3 id="auth-title" class="modal-title">Login to RhythmType</h3>
+        <button id="auth-close" class="modal-close"><span class="material-symbols-rounded">close</span></button>
+      </div>
+
+      <form id="auth-form">
+        <div class="form-group">
+          <label for="auth-username">Username or Email</label>
+          <input type="text" id="auth-username" class="form-input" required />
+        </div>
+
+        <div id="email-group" class="form-group" style="display: none;">
+          <label for="auth-email">Email Address</label>
+          <input type="email" id="auth-email" class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" class="form-input" required />
+        </div>
+
+        <button type="submit" class="btn-primary form-submit">
+          <span class="material-symbols-rounded">login</span> Submit
+        </button>
+      </form>
+
+      <div class="auth-toggle">
+        <span>Need an account? <button id="auth-toggle-btn">Register here</button></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL SHARE MODAL -->
+  <div id="share-modal" class="modal-backdrop">
+    <div class="modal-box glass-card" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Share Test Results</h3>
+        <button id="share-close" class="modal-close"><span class="material-symbols-rounded">close</span></button>
+      </div>
+      
+      <canvas id="share-canvas" class="share-card-canvas"></canvas>
+
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button id="copy-card-btn" class="btn-primary">
+          <span class="material-symbols-rounded">content_copy</span> Copy Summary
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="/js/words.js"></script>
+  <script src="/js/audio.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
