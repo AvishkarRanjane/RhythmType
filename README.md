@@ -1,45 +1,28 @@
-<div align="center">
+# RhythmType ⌨️⚡
 
-# ⌨️ RhythmType ⚡
-### *The Ultimate Speed Typing Test, Real-Time Analytics & Gamified Platform*
+> Production-ready speed typing test, real-time analytics, and gamified platform with Web Audio API keyboard sound synthesis, anti-cheat telemetry, and ambient glassmorphism aesthetics.
 
-[![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express.js-v4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![SQLite](https://img.shields.io/badge/SQLite-Better--SQLite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployable-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-
-</div>
+🌐 **Live Demo**: [https://rhythmtype-six.vercel.app](https://rhythmtype-six.vercel.app)
 
 ---
 
-## 🌟 Overview
+## Features ✨
 
-**RhythmType** is a modern, high-performance, full-stack speed typing platform engineered with Node.js, Express, dual-driver PostgreSQL/SQLite database support, vanilla HTML5/CSS3/JavaScript, and Web Audio API synthesized mechanical keyboard sound effects.
-
-Designed to deliver an award-winning user experience, RhythmType features an interactive typing arena with dynamic caret baseline alignment, real-time WPM velocity tracking, anti-cheat telemetry analysis, daily streak retention mechanics, XP leveling systems, and shareable analytics cards.
-
----
-
-## ✨ Features & Highlights
-
-- **⌨️ Interactive Typing Engine**:
+- **⌨️ Interactive Typing Arena**:
   - **4 Modes**: Words (1000 top English words), Punctuation, Numbers, and Code Snippets (JavaScript, Python, HTML/CSS).
   - **4 Duration Presets**: 15s, 30s, 60s, and 120s.
   - **Dynamic Caret Alignment**: Pixel-perfect vertical baseline alignment centering the glowing cyan pointer over active characters.
   - **High-Contrast Readability**: Slate gray untyped text (`#64748b`), active target letter highlight (`#ffffff`), neon green correct characters (`#00ff88`), and bright red error alerts (`#ff4655`).
 
-- **🔊 Web Audio API Sound FX**:
+- **🔊 Web Audio API Keyboard Synthesizer**:
   - Zero external `.wav`/`.mp3` asset dependencies.
-  - Synthesizes tactile key clicks, deep spacebar thuds, and error buzzes dynamically using audio context oscillators.
-  - Organic pitch jitter (+/- 5%) for natural typing feedback + instant mute toggle with `localStorage` persistence.
+  - Synthesizes tactile key clicks, deep spacebar thuds, and error buzzes dynamically using Web Audio API oscillators.
+  - Organic pitch jitter (+/- 5%) for natural typing feedback + instant mute toggle saved in `localStorage`.
 
-- **🎨 Ambient Glassmorphism Aesthetics**:
+- **🎨 Glassmorphism & Theme Engine**:
   - High-definition cyber grid wallpaper background with dark radial vignette overlay.
   - Glassmorphism cards with `backdrop-filter: blur(16px)` and translucent borders (`rgba(255, 255, 255, 0.1)`).
-  - Floating ambient neon background glow blobs.
-  - **4 Themes**: `Cyber Neon`, `Midnight Slate`, `Nord Arctic`, and `Matrix Green`.
+  - Floating ambient neon background glow blobs behind the active typing arena.
 
 - **🛡️ Anti-Cheat & Defensive Validation**:
   - **Keystroke Variance Analysis**: Server analyzes inter-keystroke interval timing (`variance > 20ms` and `mean > 15ms`) to block macro bots and copy-paste injection.
@@ -55,124 +38,117 @@ Designed to deliver an award-winning user experience, RhythmType features an int
     - 🔥 `Consistency King`: 7-day typing streak
     - 💻 `Code Monkey`: Complete 10 code snippet tests
 
-- **📊 Advanced Post-Test Analytics**:
+- **📊 Advanced Analytics & Social Sharing**:
   - Interactive HTML5 Canvas WPM velocity chart over time.
-  - Detailed metrics grid: Net WPM, Raw WPM, Accuracy %, Consistency %, Correct, Incorrect, Extra chars.
+  - Detailed metrics breakdown: Net WPM, Raw WPM, Accuracy %, Consistency %, Correct, Incorrect, Extra chars.
   - **Social Share Card Generator**: Canvas card image/text summary formatted for Twitter/Discord sharing.
 
 ---
 
-## 🏗️ Architecture & Dual Database Strategy
+## Color Palette 🎨
 
-```text
+- **Cyber Neon**:
+  - Primary Cyan: `#00f0ff`
+  - Neon Green: `#00ff88`
+  - Accent Red: `#ff4655`
+- **Midnight Slate**:
+  - Indigo Accent: `#6366f1`
+  - Purple Glow: `#a855f7`
+- **Nord Arctic**:
+  - Ice Blue: `#88c0d0`
+  - Nordic Gold: `#ebcb8b`
+- **Matrix Green**:
+  - Terminal Green: `#00ff66`
+  - Deep Dark Green: `#003311`
+
+---
+
+## Tech Stack 🛠️
+
+- **Backend**: Node.js, Express.js
+- **Database**: Dual Driver Adapter (SQLite via `better-sqlite3` / PostgreSQL via `pg`)
+- **Authentication**: JWT stored in HTTP-Only Cookies + `bcryptjs` (salt 12)
+- **Security & Rate Limiting**: Helmet, CORS, `express-rate-limit`, `express-validator`
+- **Frontend**: HTML5, Vanilla CSS3, JavaScript (ES6+)
+- **Typography & Icons**: Plus Jakarta Sans, JetBrains Mono, Google Material Symbols Rounded
+- **Audio Synthesis**: Web Audio API Oscillators
+- **Deployment**: Vercel Serverless (`vercel.json`)
+
+---
+
+## Folder Structure 📂
+
+```
 RhythmType/
-├── .env.example
-├── .gitignore
-├── README.md
-├── vercel.json
-├── package.json
-├── server.js
+├── server.js               # Express application entry point
+├── vercel.json             # Vercel serverless routing configuration
+├── package.json            # Dependencies & scripts
 ├── src/
 │   ├── config/
-│   │   └── database.js      <-- Async DB Adapter (PostgreSQL / SQLite)
+│   │   └── database.js     # Dual PostgreSQL/SQLite async DB wrapper
 │   ├── middleware/
-│   │   ├── auth.js          <-- JWT Cookie Verification
-│   │   ├── rateLimiter.js   <-- Express Rate Limiting
-│   │   └── errorHandler.js  <-- Global Exception Handler
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── scoreRoutes.js
-│   │   └── userRoutes.js
-│   └── controllers/
-│       ├── authController.js
-│       ├── scoreController.js
-│       └── userController.js
+│   │   ├── auth.js         # JWT cookie authentication middleware
+│   │   ├── rateLimiter.js  # Score submission anti-spam rate limiting
+│   │   └── errorHandler.js # Global error handler
+│   ├── routes/             # API routes (auth, scores, users)
+│   └── controllers/        # Controllers (anti-cheat, scores, profile)
 └── public/
-    ├── index.html
-    ├── leaderboard.html
-    ├── profile.html
+    ├── index.html          # Main typing test arena & analytics
+    ├── leaderboard.html    # Global rankings view
+    ├── profile.html        # User analytics dashboard & badges
     ├── css/
-    │   └── style.css        <-- Glassmorphism & Themes
+    │   └── style.css       # Themes & glassmorphism layout
     └── js/
-        ├── app.js           <-- Core Typing Engine & Caret Math
-        ├── words.js         <-- Word Corpus Bank
-        ├── audio.js         <-- Web Audio API Synthesizer
-        ├── leaderboard.js   <-- Global Rankings Controller
-        └── profile.js       <-- User Analytics & Badges
+        ├── app.js          # Core typing engine & caret math
+        ├── words.js        # 1000 word corpus bank & code snippets
+        ├── audio.js        # Web Audio API mechanical sound synthesizer
+        ├── leaderboard.js  # Global rankings controller
+        └── profile.js      # User profile dashboard & chart logic
 ```
 
-### Dual Driver Support (`src/config/database.js`)
-- **Production (Vercel)**: PostgreSQL via `pg` or `@neondatabase/serverless` when `DATABASE_URL` is set.
-- **Local Development**: SQLite via `better-sqlite3` with an in-memory fallback for environments without prebuilt C++ binaries.
-- **Unified ASYNC Interface**: Exposes `async get()`, `async all()`, `async run()`, and `async exec()`.
+---
+
+## Setup & Installation 🚀
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/AvishkarRanjane/RhythmType.git
+   cd RhythmType
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment:**
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🔌 API Reference
+## API Reference 🔌
 
-### Authentication Endpoints
-- `POST /api/auth/register` - Create user account with bcrypt hashing (salt 12).
-- `POST /api/auth/login` - Authenticate user and issue HTTP-Only JWT cookie.
-- `POST /api/auth/logout` - Clear authentication cookie.
-- `GET /api/auth/me` - Fetch authenticated user profile & badges.
-
-### Score & Analytics Endpoints
-- `POST /api/scores/submit` - Submit typing score with anti-cheat telemetry validation, award XP/streaks, and unlock achievement badges.
-- `GET /api/scores/leaderboard?duration=30&mode=words` - Retrieve top 50 global rankings filtered by preset.
-
-### User Endpoints
-- `GET /api/users/profile` - Retrieve user statistics, unlocked badges, and historical WPM progress.
+- `POST /api/auth/register` - Create user account.
+- `POST /api/auth/login` - Authenticate user & set HTTP-Only JWT cookie.
+- `POST /api/auth/logout` - Clear cookie.
+- `GET /api/auth/me` - Get current authenticated user details.
+- `POST /api/scores/submit` - Submit score with anti-cheat telemetry validation.
+- `GET /api/scores/leaderboard?duration=30&mode=words` - Get top 50 global scores.
+- `GET /api/users/profile` - Get user statistics, unlocked badges, and history.
 
 ---
 
-## 🛠️ Local Installation & Development
+## License 📜
 
-```bash
-# 1. Clone repository
-git clone https://github.com/AvishkarRanjane/RhythmType.git
-cd RhythmType
-
-# 2. Install dependencies
-npm install
-
-# 3. Environment configuration
-cp .env.example .env
-
-# 4. Start local development server
-npm run dev
-```
-
-Open `http://localhost:3000` in your web browser.
-
----
-
-## ☁️ Vercel Serverless Deployment
-
-RhythmType is pre-configured for instant deployment on Vercel via `vercel.json`.
-
-```json
-{
-  "version": 2,
-  "builds": [
-    { "src": "server.js", "use": "@vercel/node" },
-    { "src": "public/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "server.js" },
-    { "src": "/leaderboard", "dest": "public/leaderboard.html" },
-    { "src": "/profile", "dest": "public/profile.html" },
-    { "src": "/(.*)", "dest": "public/$1" }
-  ]
-}
-```
-
-### Environment Variables on Vercel:
-- `JWT_SECRET` = `rhythmtype_production_jwt_secret_key_2026`
-- `NODE_ENV` = `production`
-- `DATABASE_URL` = `postgres://...` (from Neon, Supabase, or Vercel Postgres)
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is licensed under the MIT License.
